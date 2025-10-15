@@ -71,6 +71,14 @@ public class SoundEmitter : MonoBehaviour
         }
     }
 
+    public void StopSoundWithoutDestroy()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+    }
+
     public void StopSound()
     {
         if (audioSource != null)

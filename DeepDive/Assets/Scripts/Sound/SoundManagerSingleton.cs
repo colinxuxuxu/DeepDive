@@ -14,9 +14,9 @@ public class SoundManagerSingleton : Singleton<SoundManagerSingleton>
         SoundEmitter emitter = FindFirstObjectByType<SoundEmitter>();
         soundGameObject = Resources.Load<GameObject>("SoundGameObject");
         if (emitter != null)
-        {           
+        {
             // check if we should keep track of a looping bgm
-            if(emitter.soundData != null)
+            if (emitter.soundData != null)
             {
                 if (emitter.soundData.shouldLoop && emitter.soundData.isBGM)
                 {
@@ -90,5 +90,10 @@ public class SoundManagerSingleton : Singleton<SoundManagerSingleton>
             }
         }
         return null;
+    }
+
+    public void StopSound(SoundEmitter emitter)
+    {
+        emitter.StopSound();
     }
 }
