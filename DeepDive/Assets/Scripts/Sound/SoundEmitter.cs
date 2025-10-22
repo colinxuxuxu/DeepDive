@@ -39,6 +39,11 @@ public class SoundEmitter : MonoBehaviour
         }
     }
 
+    public bool GetIsPlaying()
+    {
+        return audioSource.isPlaying;
+    }
+
     public void SetUpSoundData(AudioSource source)
     {
         audioSource = source;

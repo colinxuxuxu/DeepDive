@@ -17,6 +17,8 @@ public class FirstPersonMovement : MonoBehaviour
 
     [Header("FootStepAudio")]
     public string currentTexture;
+    public Sound currentSound;
+    public Sound lastSound = null;
     public Sound dirt;
     public Sound grass;
     public SoundEmitter currEmitter;
@@ -34,7 +36,7 @@ public class FirstPersonMovement : MonoBehaviour
         // Update IsRunning from input.
         IsRunning = canRun && Input.GetKey(runningKey);
 
-       
+
 
         // Get targetMovingSpeed.
         float targetMovingSpeed = IsRunning ? runSpeed : speed;
@@ -52,15 +54,39 @@ public class FirstPersonMovement : MonoBehaviour
         //playing the correct footstep
         if (Mathf.Abs(rigidbody.linearVelocity.y) > 0f || Mathf.Abs(rigidbody.linearVelocity.x) > 0f)
         {
-            if (currentTexture.Equals("dirt"))
-            {  
-                if(currEmitter == null)
+            if (lastSound == null)
+            {
+                currEmitter = PlaySound(currentSound);
+                lastSound = currentSound;
+            }
+            else
+            {
+                // if current sound is different than the last sound we want to swap the footstep
+                if (!(currentSound.audioName.Equals(lastSound.audioName)))
+                {
+                    currEmitter.StopSound();
+                    currEmitter = PlaySound(currentSound);
+                    lastSound = currentSound;
+                }
+                else // same sound
+                {
+                    if(!currEmitter.GetIsPlaying())
+                    {
+                        currEmitter.PlaySound();
+                    }
+                }
+            }
+
+
+            /*if (currentTexture.Equals("dirt"))
+            {
+                if (currEmitter == null)
                 {
                     currEmitter = SoundManagerSingleton.Instance.PlaySound(dirt);
                 }
                 else
                 {
-                    if(!(currEmitter.soundData.audioName.Equals("dirt")))
+                    if (!(currEmitter.soundData.audioName.Equals("dirt")))
                     {
                         currEmitter.StopSound();
                         currEmitter = SoundManagerSingleton.Instance.PlaySound(dirt);
@@ -69,7 +95,7 @@ public class FirstPersonMovement : MonoBehaviour
             }
             if (currentTexture.Equals("Grass"))
             {
-                if(currEmitter == null)
+                if (currEmitter == null)
                 {
                     currEmitter = SoundManagerSingleton.Instance.PlaySound(grass);
                 }
@@ -81,14 +107,19 @@ public class FirstPersonMovement : MonoBehaviour
                         currEmitter = SoundManagerSingleton.Instance.PlaySound(grass);
                     }
                 }
-            }
+            }*/
         }
         else// we stop the current footstep sound
         {
             if (currEmitter != null)
             {
-                currEmitter.StopSound();
+                currEmitter.StopSoundWithoutDestroy();
             }
         }
+    }
+
+    private SoundEmitter PlaySound(Sound sound)
+    {
+        return SoundManagerSingleton.Instance.PlaySound(sound);
     }
 }

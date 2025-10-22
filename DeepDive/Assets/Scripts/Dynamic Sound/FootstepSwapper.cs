@@ -1,27 +1,38 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
-public class FootstepSwapper : MonoBehaviour
+namespace AYellowpaper.SerializedCollections
 {
-    private TerrainChecker checker;
-    public GameObject player;
-    public Terrain t;
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class FootstepSwapper : MonoBehaviour
     {
-        checker = FindFirstObjectByType<TerrainChecker>();
-    }
+        private TerrainChecker checker;
+        public GameObject player;
+        public Terrain t;
 
-    // Update is called once per frame
-    void Update()
-    {
-        Debug.Log(checker.GetLayerName(player.transform.position, t));
-        FirstPersonMovement movement = player.GetComponent<FirstPersonMovement>();
-        if (movement != null)
+        [SerializedDictionary("Material Name", "Sound")]
+        public SerializedDictionary<string, Sound> footStepMap;
+
+
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            movement.currentTexture = checker.GetLayerName(player.transform.position, t);
+            checker = FindFirstObjectByType<TerrainChecker>();
         }
 
+        // Update is called once per frame
+        void Update()
+        {
+            Debug.Log(checker.GetLayerName(player.transform.position, t));
+            FirstPersonMovement movement = player.GetComponent<FirstPersonMovement>();
+            if (movement != null)
+            {
+                movement.currentTexture = checker.GetLayerName(player.transform.position, t);
+                // trying to get the correct sound from the map
+                movement.currentSound = footStepMap[movement.currentTexture];
+            }
+
+        }
     }
 }
+

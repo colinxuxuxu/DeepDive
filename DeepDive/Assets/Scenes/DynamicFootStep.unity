@@ -710,6 +710,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 277445201}
   t: {fileID: 1843919310}
+  footStepMap:
+    _serializedList:
+    - Key: Grass
+      Value: {fileID: 11400000, guid: c66c79adca930014ebdf674da606f3b0, type: 2}
+    - Key: Pebble
+      Value: {fileID: 11400000, guid: 1c06db62fd9302c47a91502c20de7286, type: 2}
+    - Key: dirt
+      Value: {fileID: 11400000, guid: 7e02b0f514d3ca648b1e2ebfb2dd5449, type: 2}
 --- !u!114 &277445203
 MonoBehaviour:
   m_ObjectHideFlags: 0

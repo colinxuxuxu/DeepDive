@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioName: windChime
   clip: {fileID: 8300000, guid: 5b9202f7119b24643810262114ca47dd, type: 3}
-  shouldLoop: 0
+  shouldLoop: 1
   volume: 1
   is3D: 0
   isBGM: 0
